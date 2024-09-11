@@ -4,11 +4,15 @@
   <ul>
     <li>
         <p>{{ task.title }}</p>
-        <li><p>{{ task.text|linebreaks }}</p></li>
-        <li><p>{{ task.date_added|date:'M d, Y H:i' }}</p></li>
-        <li><p>{{ task.end_date|date:'M d, Y H:i' }}</p></li>
-        <li><p>{{ task.is_done }}</p></li>
-        <li><p>{{ task.priority}}</p></li>
+        <p>{{ task.text|linebreaks }}</p>
+        <p>{{ task.date_added|date:'M d, Y H:i' }}</p>
+        <p>{{ task.end_date|date:'M d, Y H:i' }}</p>
+        <p>{{ task.is_done }}</p>
+        <p>{{ task.priority}}</p>
+        
+        <p>
+          <a href="{% url 'tasks:edit_task' task.id %}">Edit task</a>
+        </p>
     </li>
   </ul>
 {% endblock content %}
