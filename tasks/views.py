@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from .models import Task
 from django.contrib.auth.decorators import login_required
 from .forms import TaskForm
+from django.http import JsonResponse
 
 # Create your views here.
 def index(request):
@@ -10,7 +11,7 @@ def index(request):
 
 @login_required
 def tasks(request):
-    tasks = Task.objects.filter(owner=request.user).order_by("priority",'date_added')
+    tasks = Task.objects.filter(owner=request.user)
     context = {'tasks': tasks}
     return render(request, 'tasks/tasks.html', context)
 
@@ -68,3 +69,15 @@ def delete_task(request, task_id):
     if task:
         task.delete()
     return redirect("tasks:tasks")
+
+@login_required
+def toggle_task_status(request, task_id):
+    task = Task.objects.get(id=task_id)
+    if task.owner != request.user:
+        raise Http404
+    if task:
+        if request.method == 'POST':
+            task.is_done = not task.is_done
+            task.save()
+            return JsonResponse({'status': 'success', 'is_done': task.is_done})
+    return JsonResponse({'status': 'error'}, status=400)

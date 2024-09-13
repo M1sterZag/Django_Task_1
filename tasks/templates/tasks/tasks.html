@@ -1,19 +1,73 @@
 {% extends "tasks/base.html" %}
 {% block content %}
-  <p>Tasks</p>
-  <ul>
-    {% for task in tasks %}
-        <li>
+  <div class="container mt-4">
+    <h2 class="text-center">Tasks</h2>
+    <ul class="list-group mb-4">
+      {% for task in tasks %}
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          <div>
             <a href="{% url 'tasks:task' task.id %}">{{ task.title }}</a>
-            <a href="{% url 'tasks:edit_task' task.id %}">Edit task</a>
-            <a href="{% url 'tasks:delete_task' task.id %}">Delete task</a>
+          </div>
+          <div class="d-flex align-items-center">
+            <p class="mb-0 ml-3 text-muted" style="font-size: 0.9rem;">{{ task.end_date }}</p>
+
+            {% if task.priority == 1 %}
+              <p class="mb-0 ml-3" style="font-size: 0.9rem; color: green">Low</p>
+            {% elif task.priority == 2 %}
+              <p class="mb-0 ml-3" style="font-size: 0.9rem; color: orange">Medium</p>
+            {% elif task.priority == 3 %}
+              <p class="mb-0 ml-3" style="font-size: 0.9rem; color: red">High</p>
+            {% endif %}
+
+            <a href="{% url 'tasks:edit_task' task.id %}" class="btn btn-sm btn-outline-primary ml-2">Edit</a>
+            <a href="{% url 'tasks:delete_task' task.id %}" class="btn btn-sm btn-outline-danger ml-2 mr-2">Delete</a>
+            <input type="checkbox" class="task-status-toggle" data-task-id="{{ task.id }}" {% if task.is_done %}checked{% endif %}>
+          </div>
         </li>
-        <hr>
-    {% empty %}
-      <li>No tasks ¯\_(ツ)_/¯</li>
-    {% endfor %}
-  </ul>
+      {% empty %}
+        <li class="list-group-item text-center">No tasks ¯\_(ツ)_/¯</li>
+      {% endfor %}
+    </ul>
+    <div class="d-flex justify-content-center">
+      <a href="{% url 'tasks:new_task' %}" class="btn btn-success">Add a new task</a>
+    </div>
+  </div>
 
-  <a href="{% url 'tasks:new_task' %}">Add a new task:</a>
+  <style>
+    .low-priority {
+      color: #28a745; /* Зеленый для Low */
+    }
+    .medium-priority {
+      color: #ffc107; /* Желтый для Medium */
+    }
+    .high-priority {
+      color: #dc3545; /* Красный для High */
+    }
+  </style>
 
+  <script>
+    document.querySelectorAll('.task-status-toggle').forEach(function(checkbox) {
+      checkbox.addEventListener('change', function() {
+        const taskId = this.getAttribute('data-task-id');
+        fetch(`/task/${taskId}/toggle_status/`, {
+          method: 'POST',
+          headers: {
+            'X-CSRFToken': '{{ csrf_token }}',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({status: this.checked})
+        }).then(response => {
+          if (response.ok) {
+            response.json().then(data => {
+              if (data.is_done) {
+                checkbox.setAttribute('checked', 'checked');
+              } else {
+                checkbox.removeAttribute('checked');
+              }
+            });
+          }
+        });
+      });
+    });
+  </script>
 {% endblock content %}

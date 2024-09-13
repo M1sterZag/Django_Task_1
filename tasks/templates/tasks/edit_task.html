@@ -1,10 +1,26 @@
 {% extends "tasks/base.html" %}
 {% block content %}
-	<p><a href="{% url 'tasks:task' task.id %}">{{ task.title }}</a></p>
-	<p>Edit task:</p>
-		<form action="{% url 'tasks:edit_task' task.id %}" method='post'>
-		{% csrf_token %}
-		{{ form.as_p }}
-		<button name="submit">Save changes</button>
-	</form>
+  <div class="container mt-4">
+    <h2 class="text-center mb-4">Edit Task</h2>
+    
+    <p class="text-center">
+      <a href="{% url 'tasks:task' task.id %}" class="text-primary">{{ task.title }}</a>
+    </p>
+
+    <div class="card shadow-lg border-primary">
+      <div class="card-body">
+        <form action="{% url 'tasks:edit_task' task.id %}" method="post">
+          {% csrf_token %}
+          
+          <div class="form-group">
+            {{ form.as_p }}
+          </div>
+          
+          <div class="text-right">
+            <button type="submit" class="btn btn-primary">Save changes</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
 {% endblock content %}
