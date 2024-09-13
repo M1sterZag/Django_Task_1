@@ -52,8 +52,8 @@ def edit_task(request, task_id):
     return render(request, 'tasks/edit_task.html', context)
 
 
-# def delete_task(request, task_id):
-#     print(f"Attempting to delete task with id: {task_id}")
-#     task = get_object_or_404(Task, id=task_id)
-#     task.delete()
-#     return redirect("tasks:tasks")
+def delete_task(request, task_id):
+    task = Task.objects.get(id=task_id)
+    if task:
+        task.delete()
+    return redirect("tasks:tasks")
