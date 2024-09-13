@@ -8,9 +8,17 @@
 <body>
     <p>
         <a href="{% url 'tasks:index' %}">Home</a>
-    </p>
-    <p>
         <a href="{% url 'tasks:tasks' %}">Tasks</a>
+        {% if user.is_authenticated %}
+            Hello, {{ user.username }}.
+            <form id="logout-form" action="{% url 'users:logout' %}" method="POST">
+                {% csrf_token %}
+                <button class="btn btn-outline-dark" type="submit">Log out</button>
+            </form>
+        {% else %}
+            <a href="{% url 'users:register' %}">Register</a> -
+            <a href="{% url 'users:login' %}">Log in</a>
+        {% endif %}
     </p>
     {% block content %}
     {% endblock content %}
