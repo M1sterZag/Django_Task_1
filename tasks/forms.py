@@ -5,6 +5,12 @@ class TaskForm(forms.ModelForm):
     class Meta:
         model = Task
         fields = ['title', 'text', 'end_date', 'priority']
+        labels = {
+            'title': 'Заголовок',
+            'text': 'Описание',
+            'end_date': 'Дата окончания',
+            'priority': 'Приоритет',
+        }
 
     def __init__(self, *args, **kwargs):
         super(TaskForm, self).__init__(*args, **kwargs)

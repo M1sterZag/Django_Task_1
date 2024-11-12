@@ -1,59 +1,62 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MyTodoList</title>
+    <title>ToDoList</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
-            background: linear-gradient(135deg, #f0f2f5 0%, #ffffff 100%);
-            font-family: 'Roboto', sans-serif;
-            color: #343a40;
+            background: linear-gradient(135deg, #e6ebef 0%, #ffffff 100%);
+            font-family: 'Open Sans', sans-serif;
+            color: #333333;
         }
         .navbar {
-            background-color: #0056b3;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+            background-color: #004080;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
         }
+        .navbar-brand, .nav-link, .navbar-text {
+			color: #ffffff !important;
+		}
         .navbar-brand, .nav-link {
             color: #ffffff !important;
             font-weight: 600;
         }
-        .btn-outline-dark {
+        .btn-outline-light {
             color: #ffffff;
             border-color: #ffffff;
         }
-        .btn-outline-dark:hover {
+        .btn-outline-light:hover {
             background-color: #ffffff;
-            color: #0056b3;
+            color: #004080;
             transition: 0.3s ease;
         }
         .container {
             background-color: #ffffff;
-            padding: 50px;
-            margin-top: 30px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-            border-radius: 20px;
+            padding: 40px;
+            margin-top: 40px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            border-radius: 15px;
         }
         h2 {
-            color: #0056b3;
+            color: #004080;
             font-weight: 700;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
         }
-        .btn-success {
-            background-color: #28a745;
-            border-color: #28a745;
+        .btn-primary {
+            background-color: #2a6ebb;
+            border-color: #2a6ebb;
         }
-        .btn-success:hover {
-            background-color: #218838;
-            border-color: #1e7e34;
+        .btn-primary:hover {
+            background-color: #245b9c;
+            border-color: #204a82;
         }
         .form-control {
-            border-radius: 8px;
+            border-radius: 10px;
         }
         @media (max-width: 768px) {
             .navbar-brand {
-                font-size: 1.3rem;
+                font-size: 1.4rem;
             }
             .container {
                 padding: 30px;
@@ -63,36 +66,36 @@
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark mb-4">
-        <a class="navbar-brand" href="{% url 'tasks:index' %}">MyTodoList</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <a class="navbar-brand" href="{% url 'tasks:index' %}">ToDoList</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Переключить навигацию">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'tasks:index' %}">Home</a>
+                    <a class="nav-link" href="{% url 'tasks:index' %}">Главная</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'tasks:tasks' %}">Tasks</a>
+                    <a class="nav-link" href="{% url 'tasks:tasks' %}">Задачи</a>
                 </li>
             </ul>
             <ul class="navbar-nav">
                 {% if user.is_authenticated %}
                     <li class="nav-item">
-                        <span class="navbar-text mr-3">Hello, {{ user.username }}.</span>
+                        <span class="navbar-text mr-3">{{ user.username }}</span>
                     </li>
                     <li class="nav-item">
                         <form id="logout-form" action="{% url 'users:logout' %}" method="POST" class="form-inline">
                             {% csrf_token %}
-                            <button class="btn btn-outline-dark" type="submit">Log out</button>
+                            <button class="btn btn-outline-light" type="submit">Выйти</button>
                         </form>
                     </li>
                 {% else %}
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'users:register' %}">Register</a>
+                        <a class="nav-link" href="{% url 'users:register' %}">Регистрация</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'users:login' %}">Log in</a>
+                        <a class="nav-link" href="{% url 'users:login' %}">Вход</a>
                     </li>
                 {% endif %}
             </ul>

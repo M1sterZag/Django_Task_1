@@ -1,42 +1,40 @@
 {% extends "tasks/base.html" %}
 {% block content %}
-  <div class="container mt-4">
-    <h2 class="text-center" style="color: #003366;">Edit Task</h2>
+    <h2 class="text-center" style="color: #003366;">Редактирование задачи</h2>
     
-    <p class="text-center">
-      <a href="{% url 'tasks:task' task.id %}" class="text-primary">{{ task.title }}</a>
-    </p>
+    <h3 class="text-center">
+      {{task.title}}
+    </h3>
 
-      <div class="card-body">
+    <div class="card-body">
         <form action="{% url 'tasks:edit_task' task.id %}" method="post">
           {% csrf_token %}
           
           <div class="form-group">
-            {{ form.title.label_tag }}
+            <label for="{{ form.title.id_for_label }}">Заголовок</label>
             {{ form.title }}
           </div>
 
           <div class="form-group">
-            {{ form.text.label_tag }}
+            <label for="{{ form.text.id_for_label }}">Описание</label>
             {{ form.text }}
           </div>
 
           <div class="form-group">
-            {{ form.end_date.label_tag }}
+            <label for="{{ form.end_date.id_for_label }}">Дата окончания</label>
             {{ form.end_date }}
           </div>
 
           <div class="form-group">
-            {{ form.priority.label_tag }}
+            <label for="{{ form.priority.id_for_label }}">Приоритет</label>
             {{ form.priority }}
           </div>
 
           <div class="text-center">
-            <button type="submit" class="btn btn-success">Save changes</button>
+            <button type="submit" class="btn btn-success">Сохранить</button>
           </div>
         </form>
-      </div>
-  </div>
+    </div>
 
   <style>
     .form-group label {

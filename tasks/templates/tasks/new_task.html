@@ -1,8 +1,7 @@
 {% extends "tasks/base.html" %}
 {% block content %}
 
-  <div class="container mt-4">
-    <h2 class="text-center" style="color: #003366;">Add a New Task</h2>
+    <h2 class="text-center" style="color: #003366;">Добавление задачи</h2>
     <form action="{% url 'tasks:new_task' %}" method="post">
       {% csrf_token %}
       
@@ -27,10 +26,9 @@
       </div>
 
       <div class="text-center">
-        <button type="submit" class="btn btn-success">Add Task</button>
+        <button type="submit" class="btn btn-success">Добавить</button>
       </div>
     </form>
-  </div>
 
   <style>
     .form-group label {
