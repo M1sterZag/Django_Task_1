@@ -7,4 +7,4 @@ EXPOSE 2000
 
 RUN python manage.py migrate
 
-CMD ["python", "manage.py", "runserver", "0.0.0.0:2000"]
+CMD ["python", "manage.py", "runserver"]
